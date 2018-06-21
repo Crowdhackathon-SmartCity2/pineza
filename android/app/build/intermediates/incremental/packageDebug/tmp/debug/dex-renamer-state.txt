@@ -1,4 +1,4 @@
-#Tue Jun 19 13:40:10 EEST 2018
-base.0=/Users/Nick/development/react_native/pestofrontend_5/android/app/build/intermediates/transforms/dexMerger/debug/0
+#Thu Jun 21 18:06:59 EEST 2018
+base.0=/Users/Nick/development/react_native/pestofrontend/android/app/build/intermediates/transforms/dexMerger/debug/0
 path.0=classes.dex
 renamed.0=classes.dex

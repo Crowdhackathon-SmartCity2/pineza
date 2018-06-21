@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "/Users/Nick/development/react_native/pestofrontend_5/android/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-da/values-da.xml",
+            "outputFile": "/Users/Nick/development/react_native/pestofrontend/android/app/build/intermediates/res/merged/debug/values-da/values-da.xml",
             "map": [
                 {
                     "source": "/Users/Nick/.gradle/caches/transforms-1/files-1.1/play-services-basement-10.0.1.aar/d4c3672c38acc40f6e1f9aa636fa891d/res/values-da/values.xml",
@@ -57,7 +57,7 @@
             ]
         },
         {
-            "outputFile": "/Users/Nick/development/react_native/pestofrontend_5/android/app/build/intermediates/res/merged/debug/values-da/values-da.xml",
+            "outputFile": "/Users/Nick/development/react_native/pestofrontend/android/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-da/values-da.xml",
             "map": [
                 {
                     "source": "/Users/Nick/.gradle/caches/transforms-1/files-1.1/play-services-basement-10.0.1.aar/d4c3672c38acc40f6e1f9aa636fa891d/res/values-da/values.xml",
