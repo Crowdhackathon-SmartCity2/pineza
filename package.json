@@ -1,0 +1,32 @@
+{
+  "name": "pestofrontend_5",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "test": "jest"
+  },
+  "dependencies": {
+    "@expo/vector-icons": "^6.3.1",
+    "eslint": "^4.19.1",
+    "native-base": "^2.5.2",
+    "react": "16.3.1",
+    "react-native": "0.55.4",
+    "react-native-circle-button": "^1.0.9",
+    "react-native-elements": "^0.19.1",
+    "react-native-maps": "^0.21.0",
+    "react-native-modal": "^6.1.0",
+    "react-native-settings-list": "^1.8.0",
+    "react-native-vector-icons": "^4.6.0",
+    "react-navigation": "^2.3.1"
+  },
+  "devDependencies": {
+    "babel-jest": "23.0.1",
+    "babel-preset-react-native": "4.0.0",
+    "jest": "23.1.0",
+    "react-test-renderer": "16.3.1"
+  },
+  "jest": {
+    "preset": "react-native"
+  }
+}
