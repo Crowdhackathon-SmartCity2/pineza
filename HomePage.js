@@ -3,8 +3,9 @@ import {StyleSheet, Text, View, TouchableHighlight, TouchableOpacity,
   TouchableWithoutFeedback,
   StatusBar,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon from 'react-native-vector-icons/Octicons';
 import SettingsPage from './SettingsPage';
+
 
 
 let INCIDENT_1 = "Tap here to "
@@ -78,7 +79,7 @@ class Settings extends Component {
       <View style={buttonStyles.CircleContainer}>
         <View style={buttonStyles.Circle}>
           <TouchableOpacity activeOpacity={0.4} onPress={this.props.SettingsButton} style={buttonStyles.CircleContainer}>
-          <Icon name={"cog"}  size={30} color="#888888" />
+          <Icon name={"pin"}  size={30} color="#888888" />
           </TouchableOpacity>
         </View>
       </View>
@@ -114,6 +115,7 @@ const styles = StyleSheet.create({
     flex:1,
     // backgroundColor: '#00ff99',
     backgroundColor: '#1affff',
+    // backgroundColor: '#d2ff4d',
     justifyContent: 'center',
     alignItems: 'center',
   },

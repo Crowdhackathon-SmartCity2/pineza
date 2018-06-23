@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Alert, Button, TextInput, View, StyleSheet, Text } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon2 from 'react-native-vector-icons/Octicons';
+
 
 
 export default class LoginPage extends Component {
@@ -29,7 +31,7 @@ export default class LoginPage extends Component {
                 <Text>
                     <Icon name={"user-secret"}  size={35} color="#dddddd"/><Text>    </Text>
                     <Icon name={"long-arrow-right"}  size={30} color="#888888" /><Text>    </Text>
-                    <Icon name={"thumb-tack"}  size={35} color="#dd0000" /><Text>    </Text>
+                    <Icon2 name={"pin"}  size={35} color="#dd0000" /><Text>    </Text>
                     <Icon name={"long-arrow-right"}  size={30} color="#888888" /><Text>    </Text>
                     <Icon name={"users"}  size={45} color="#33ffff" />
                 </Text>
@@ -93,3 +95,4 @@ const styles = StyleSheet.create({
       padding:30
   }
 });
+

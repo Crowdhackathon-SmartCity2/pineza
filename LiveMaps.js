@@ -1,6 +1,14 @@
 import React, { Component } from 'react'
 import MapView, { PROVIDER_GOOGLE, } from 'react-native-maps'
-import { View, StyleSheet, Text, TouchableOpacity } from 'react-native'
+import { View, StyleSheet, Text, TouchableOpacity, Dimensions } from 'react-native'
+let { width, height } = Dimensions.get('window');
+
+
+const ASPECT_RATIO = width / height;
+const LATITUDE = 37.975547;
+const LONGITUDE = 23.734096;
+const LATITUDE_DELTA = 0.0922;
+const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
 
 export default class LiveMaps extends Component {
@@ -16,10 +24,10 @@ export default class LiveMaps extends Component {
 
     this.state = {
       region: {
-          latitude: 37.975547,
-          longitude: 23.734096,
-          latitudeDelta: 0.02,
-          longitudeDelta: 0.02
+          latitude: LATITUDE,
+          longitude: LONGITUDE,
+          latitudeDelta: LATITUDE_DELTA,
+          longitudeDelta: LONGITUDE_DELTA
       },
       markers: [
         {
@@ -64,17 +72,33 @@ export default class LiveMaps extends Component {
   }
 
   
+ 
   componentDidMount() {
-    this.watchId = navigator.geolocation.watchPosition(
-      (position) => {
+    navigator.geolocation.getCurrentPosition(
+      position => {
         this.setState({
-          userLatitude: position.coords.latitude,
-          userLongitude: position.coords.longitude,
-          error: null,
+          region: {
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+            latitudeDelta: LATITUDE_DELTA,
+            longitudeDelta: LONGITUDE_DELTA,
+          }
         });
       },
-      (error) => this.setState({ error: error.message }),
-      { enableHighAccuracy: false, timeout: 20000, distanceFilter: 100 },
+    (error) => console.log(error.message),
+    { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
+    );
+    this.watchID = navigator.geolocation.watchPosition(
+      position => {
+        this.setState({
+          region: {
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+            latitudeDelta: LATITUDE_DELTA,
+            longitudeDelta: LONGITUDE_DELTA,
+          }
+        });
+      }
     );
   }
 
@@ -86,8 +110,8 @@ export default class LiveMaps extends Component {
   render() {
 
     var initialRegion={
-      latitude: 37.975547,
-      longitude: 23.734096,
+      latitude: 0,
+      longitude: 0,
       latitudeDelta: 0.02,
       longitudeDelta: 0.02
     } 
@@ -105,9 +129,13 @@ export default class LiveMaps extends Component {
             // region={this.state.region}
             // onRegionChange={this.onRegionChange}
             showsUserLocation={true}
+            showsMyLocationButton={true}
             liteMode={false}
             showsMyLocationButton={true}
             provider={PROVIDER_GOOGLE}
+            onRegionChangeComplete= {region => this.setState({region})}
+            region={ this.state.region }
+
           >
             
             {this.state.markers.map((marker,i) => (
@@ -115,7 +143,6 @@ export default class LiveMaps extends Component {
               coordinate={marker.latlng}
               title={marker.title}
               description={marker.description}
-              draggabe
               />
             ))}
 

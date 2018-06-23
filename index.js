@@ -24,3 +24,6 @@ const App = createStackNavigator({
   
 
 AppRegistry.registerComponent('pestofrontend_5', () => App);
+
+
+

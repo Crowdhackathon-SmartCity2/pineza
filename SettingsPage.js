@@ -95,7 +95,7 @@ class SettingsList extends Component {
               </Body>
               <Right>
                 <Text>2.0 Km</Text>
-                <Icon name="arrow-forward" />
+               {/* <Icon name="arrow-forward" /> */}
               </Right>
             </ListItem>
 
@@ -108,7 +108,6 @@ class SettingsList extends Component {
               </Body>
               <Right>
                 <Text>En</Text>
-                <Icon name="arrow-forward" />
               </Right>
             </ListItem>
 
@@ -121,7 +120,7 @@ class SettingsList extends Component {
               </Body>
               <Right>
                 <Text></Text>
-                <Icon name="arrow-forward" />
+                {/* <Icon name="arrow-forward" /> */}
               </Right>
             </ListItem>
 
@@ -152,7 +151,8 @@ const styles = StyleSheet.create({
     width: width*0.9,
     height: height*0.8,
     backgroundColor: '#33001a',
-    borderRadius: 20
+    borderRadius: 20,
+    opacity: 0.75
   }
 
 });

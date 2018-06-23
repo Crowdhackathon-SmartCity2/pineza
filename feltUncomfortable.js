@@ -1,8 +1,17 @@
 import React, { Component } from 'react'
 import MapView, { PROVIDER_GOOGLE, } from 'react-native-maps'
-import { View, StyleSheet, Text, Button } from 'react-native'
+import { View, StyleSheet, Text, Button, Dimensions } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Modal from "react-native-modal";
+let { width, height } = Dimensions.get('window');
+import Aubergine from './MapStyles/Aubergine.json';
+
+
+const ASPECT_RATIO = width / height;
+const LATITUDE = 0;
+const LONGITUDE = 0;
+const LATITUDE_DELTA = 0.0922;
+const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
 
 export default class feltUncomfortable extends Component {
@@ -18,10 +27,10 @@ export default class feltUncomfortable extends Component {
 
     this.state = {
       region: {
-          latitude: 37.975547,
-          longitude: 23.734096,
-          latitudeDelta: 0.02,
-          longitudeDelta: 0.02
+          latitude: LATITUDE,
+          longitude: LONGITUDE,
+          latitudeDelta: LATITUDE_DELTA,
+          longitudeDelta: LONGITUDE_DELTA
       },
       markers: [
         {
@@ -77,21 +86,47 @@ export default class feltUncomfortable extends Component {
 
   
   componentDidMount() {
-    this.watchId = navigator.geolocation.watchPosition(
-      (position) => {
+    navigator.geolocation.getCurrentPosition(
+      position => {
         this.setState({
-          userLatitude: position.coords.latitude,
-          userLongitude: position.coords.longitude,
-          error: null,
+          region: {
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+            latitudeDelta: LATITUDE_DELTA,
+            longitudeDelta: LONGITUDE_DELTA,
+          }
         });
       },
-      (error) => this.setState({ error: error.message }),
-      { enableHighAccuracy: false, timeout: 20000, distanceFilter: 100 },
+    (error) => console.log(error.message),
+    { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
+    );
+    this.watchID = navigator.geolocation.watchPosition(
+      position => {
+        this.setState({
+          region: {
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+            latitudeDelta: LATITUDE_DELTA,
+            longitudeDelta: LONGITUDE_DELTA,
+          }
+        });
+      }
     );
   }
 
   componentWillUnmount() {
     navigator.geolocation.clearWatch(this.watchId);
+  }
+
+  _finish(){
+    if (this.state.incidentLatitude==null || this.state.incidentLongitude==null) {
+      this.state.incidentLatitude=this.state.region.latitude;
+      this.state.incidentLongitude=this.state.region.longitude;
+      this._toggleModal();
+    }
+    else {
+      this._toggleModal();
+    }
   }
 
 
@@ -108,23 +143,27 @@ export default class feltUncomfortable extends Component {
       latlng: {latitude: this.state.userLatitude, longitude: this.state.userLongitude},
       title: "User"
     }
-
+    
       return (
         <View style={styles.container}>
 
           <MapView style={styles.map}
-            initialRegion={initialRegion}
+            // initialRegion={initialRegion}
             // region={this.state.region}
             // onRegionChange={this.onRegionChange}
+            region={ this.state.region }
+            onRegionChangeComplete= {region => this.setState({region})}
             showsUserLocation={true}
             liteMode={false}
+            showsUserLocation={ true }
             showsMyLocationButton={true}
             provider={PROVIDER_GOOGLE}
+            // customMapStyle={Aubergine}
           >
             
           
           <MapView.Marker 
-            coordinate={{latitude: initialRegion.latitude, longitude:initialRegion.longitude}}
+            coordinate={this.state.region}
             title={"Felt Uncomfortable"}
             pinColor = 'blue'
             opacity={1.0}
@@ -135,10 +174,10 @@ export default class feltUncomfortable extends Component {
 
             </MapView>
            <View style={{position: "absolute", bottom: 40, right: 40}}>
-          <Button  onPress={()=>{this._toggleModal()}} title="Finish" color={'#99004d'} />
+          <Button  onPress={()=>{this._finish()}} title="Finish" color={'#99004d'} />
           </View>
-        
 
+        
           <Modal 
           isVisible={this.state.isModalVisible}
           backdropColor={'#33001a'}
@@ -150,10 +189,11 @@ export default class feltUncomfortable extends Component {
               <Text style={{color: '#33ffff', padding:20, textAlign: 'center', fontSize:25}}>Pineza Dropped!</Text>
               <Icon name={"check-circle"}  size={40} color="#00ff99"/>
               <Text style={{color: '#33ffff', padding:20, textAlign: 'center', fontSize: 15}} > 
-              Your Incident has been recorded successfuly!{'\n'}{'\n'} Thank you for sharing your experience and helping yourshelf by helping others! Maybe you want to share your experience to your social media. 
+              Your Incident has been recorded successfuly!{'\n'}{'\n'}Thank you for sharing your experience and helping yourshelf by helping others! Maybe you want to share your experience to your social media. 
+              {'\n'}{'\n'}latitude: {this.state.incidentLatitude}{'\n'}longitude: {this.state.incidentLongitude}
               </Text>
               
-              <Button color={"#b30059"} onPress={()=>{this.props.navigation.navigate('HomePage')}} title={'Home'} />
+              <Button color={"#b30059"} onPress={()=>{this._toggleModal(); this.props.navigation.navigate('HomePage')}} title={'Home'} />
   
   
             </View>

@@ -1,0 +1,16 @@
+{
+  "name": "",
+  "css_prefix_text": "icon-",
+  "css_use_suffix": false,
+  "hinting": true,
+  "units_per_em": 1000,
+  "ascent": 850,
+  "glyphs": [
+    {
+      "uid": "794d73c3a5fcf710265679700e470578",
+      "css": "pin",
+      "code": 59393,
+      "src": "iconic"
+    }
+  ]
+}
