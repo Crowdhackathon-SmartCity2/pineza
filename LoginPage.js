@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Alert, Button, TextInput, View, StyleSheet, Text } from 'react-native';
+import { Alert, Button, TextInput, View, StyleSheet, Text, AsyncStorage } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Icon2 from 'react-native-vector-icons/Octicons';
 
@@ -13,15 +13,43 @@ export default class LoginPage extends Component {
     
     this.state = {
       username: '',
+      Email: '',
       password: '',
+      key: null
     };
   }
   
-  onLogin() {
-    const { username, password } = this.state;
+   onLogin = async () => {
+    const { username, Email, password } = this.state;
+    await fetch('http://192.168.2.6:8000/api-auth/login/', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+     },
+    body: JSON.stringify({
+    username: username,
+    email: "dervenis@mail.com",
+    password: "nikos1994"
+  })
+}).then((response) => response.json())
+.then((responseJson) => {
+  console.log("Response",responseJson)
+  this.state.key = responseJson.key;
+})
+.catch((error) => {
+  console.error(error);
+})
+  console.log("key",this.state.key)
+  try {
+    await AsyncStorage.setItem('@MySuperStore:key', this.state.key);
+  } catch (error) {
+    console.log("Error saving data" + error);
+}
+  return this.state.key
+}
 
-    Alert.alert('Credentials', `${username} + ${password}`);
-  }
+ 
 
   render() {
     return (
@@ -47,6 +75,15 @@ export default class LoginPage extends Component {
 
             />
             <TextInput
+                value={this.state.Email}
+                onChangeText={(Email) => this.setState({ Email })}
+                placeholder={'Email'}
+                style={styles.input}
+                placeholderTextColor={'#aaaaaa'}
+                underlineColorAndroid={'#aaaaaa'}
+
+            />
+            <TextInput
                 value={this.state.password}
                 onChangeText={(password) => this.setState({ password })}
                 placeholder={'Password'}
@@ -59,7 +96,8 @@ export default class LoginPage extends Component {
             
             <Button
                 title={'Login'}
-                onPress={()=> {this.props.navigation.navigate('HomePage')}}
+                onPress={async ()=> { const res = await this.onLogin(); if(res != null) {this.props.navigation.navigate('HomePage')} }}
+              
                 color={'#b30059'}
             />
         </View>

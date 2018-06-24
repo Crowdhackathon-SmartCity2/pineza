@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import MapView, { PROVIDER_GOOGLE, } from 'react-native-maps'
-import { View, StyleSheet, Text, Button, Dimensions } from 'react-native'
+import { View, StyleSheet, Text, Button, Dimensions, AsyncStorage } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Modal from "react-native-modal";
 let { width, height } = Dimensions.get('window');
@@ -49,6 +49,7 @@ export default class feltUncomfortable extends Component {
       error: null,
       incidentLatitude: null,
       incidentLongitude: null,
+      key1: ""
     }
     this.onRegionChange = this.onRegionChange.bind(this);
     this.moveMaptoLocation = this.moveMaptoLocation.bind(this);
@@ -86,6 +87,10 @@ export default class feltUncomfortable extends Component {
 
   
   componentDidMount() {
+
+      AsyncStorage.getItem('@MySuperStore:key').then((token) => {
+        this.setState({key1 : token})})
+
     navigator.geolocation.getCurrentPosition(
       position => {
         this.setState({
@@ -118,10 +123,31 @@ export default class feltUncomfortable extends Component {
     navigator.geolocation.clearWatch(this.watchId);
   }
 
-  _finish(){
+  async _finish(){
+    console.log("_finish")
     if (this.state.incidentLatitude==null || this.state.incidentLongitude==null) {
       this.state.incidentLatitude=this.state.region.latitude;
-      this.state.incidentLongitude=this.state.region.longitude;
+      this.state.incidentLongitude=this.state.region.longitude; 
+      await fetch('http://192.168.2.6:8000/pin/', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          Authorization: 'Token '+this.state.key1
+       },
+      body: JSON.stringify({
+      user: "derv1994",
+      area: "Center",
+      longitude: "13213.132",
+      latitude: "1311.23",
+      category: 'Uncomfortable',
+      info: 'This is a test',
+      time: '2007-03-01T13:00:00'
+    })
+    }).then((response) => response.json())
+    .then((responseJson) => {
+      console.log("Feedback",responseJson)
+    });
       this._toggleModal();
     }
     else {

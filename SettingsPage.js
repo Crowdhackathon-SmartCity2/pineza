@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Container, Content, List, ListItem, Text, Icon, Left, Body, Right, Switch } from 'native-base';
-import  {View, StyleSheet, Dimensions, Button} from 'react-native';
+import  {View, StyleSheet, Dimensions, Button, AsyncStorage} from 'react-native';
 import Modal from "react-native-modal";
 var {height, width}=Dimensions.get('window');
 
@@ -14,16 +14,45 @@ export default class SettingsPage extends Component {
       };
 
       state = {
-        isModalVisible: false
+        isModalVisible: false,
+        key1: "013aa437ba8e0a9703750962fa75dcdee21be9bd"
       };
     
       _toggleModal = () =>
         this.setState({ isModalVisible: !this.state.isModalVisible });
+
+
+     componentDidMount() {
+       AsyncStorage.getItem('key').then((token) => {
+         this.setState({key1 : token})})
+       }
+
+
+       onLogout = async () => {
+        await fetch('http://192.168.2.6:8000/api-auth/logout/', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+     },
+    body: JSON.stringify({
+    token: "013aa437ba8e0a9703750962fa75dcdee21be9bd",
+  })
+}).then((response) => response.json())
+.then((responseJson) => {
+  console.log("Response",responseJson)
+})
+.catch((error) => {
+  console.error(error);
+})
+  this.props.navigation.navigate('LoginPage') 
+    }
+    
   
     render() {
       return (
         <Container>
-          <SettingsList info={this._toggleModal}/>
+          <SettingsList key1={this.state.key1} info={this._toggleModal} onLogout={this.onLogout} />
 
             <Modal 
             isVisible={this.state.isModalVisible}
@@ -35,6 +64,7 @@ export default class SettingsPage extends Component {
               <View style={styles.infoView}>
                 <Text style={{color: '#33ffff', padding:20, textAlign: 'center', fontSize:20}}>Pineza 101..</Text>
                 <Text style={{color: '#33ffff', padding:20, textAlign: 'center'}} > 
+     
                 There's a lady who's sure
                 All that glitters is gold
                 And she's buying a stairway to heaven
@@ -58,6 +88,7 @@ export default class SettingsPage extends Component {
 }
 
 class SettingsList extends Component {
+  
   render(){
     return(
       <Content >
@@ -124,12 +155,20 @@ class SettingsList extends Component {
               </Right>
             </ListItem>
 
-            <ListItem icon>
+            <ListItem icon onPress={()=>{this.props.onLogout()}}>
               <Left>
                 <Icon type="FontAwesome" name="sign-out" />
               </Left>
               <Body>
                 <Text>Sign-Out</Text>
+              </Body>
+            </ListItem>
+            <ListItem icon>
+              <Left>
+                <Icon type="FontAwesome" name="sign-out" />
+              </Left>
+              <Body>
+                <Text>Key {this.props.key1} </Text>
               </Body>
             </ListItem>
           </List>
