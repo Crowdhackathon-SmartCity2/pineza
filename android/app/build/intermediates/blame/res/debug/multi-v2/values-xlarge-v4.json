@@ -4,20 +4,13 @@
             "outputFile": "/Users/Nick/development/react_native/pestofrontend/android/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-xlarge-v4/values-xlarge-v4.xml",
             "map": [
                 {
-                    "source": "/Users/Nick/.gradle/caches/transforms-1/files-1.1/appcompat-v7-23.0.1.aar/6dc0381dff980c0b3a255e2d1e74da2d/res/values-xlarge/values-xlarge.xml",
+                    "source": "/Users/Nick/.gradle/caches/transforms-1/files-1.1/appcompat-v7-25.0.0.aar/a8f4dd9adce9ade097adee237713cc2e/res/values-xlarge-v4/values-xlarge-v4.xml",
                     "from": {
-                        "startLines": "4,7,8,9,10,11,12",
-                        "startColumns": "4,4,4,4,4,4,4",
-                        "startOffsets": "282,587,651,718,785,851,917",
-                        "endColumns": "76,63,66,66,65,65,54",
-                        "endOffsets": "354,646,713,780,846,912,967"
-                    },
-                    "to": {
-                        "startLines": "2,3,4,5,6,7,8",
-                        "startColumns": "4,4,4,4,4,4,4",
-                        "startOffsets": "55,132,196,263,330,396,462",
-                        "endColumns": "76,63,66,66,65,65,54",
-                        "endOffsets": "127,191,258,325,391,457,512"
+                        "startLines": "2,3,4,5,6,7",
+                        "startColumns": "4,4,4,4,4,4",
+                        "startOffsets": "55,126,197,267,337,405",
+                        "endColumns": "70,70,69,69,67,67",
+                        "endOffsets": "121,192,262,332,400,468"
                     }
                 }
             ]
@@ -26,20 +19,13 @@
             "outputFile": "/Users/Nick/development/react_native/pestofrontend/android/app/build/intermediates/res/merged/debug/values-xlarge-v4/values-xlarge-v4.xml",
             "map": [
                 {
-                    "source": "/Users/Nick/.gradle/caches/transforms-1/files-1.1/appcompat-v7-23.0.1.aar/6dc0381dff980c0b3a255e2d1e74da2d/res/values-xlarge/values-xlarge.xml",
+                    "source": "/Users/Nick/.gradle/caches/transforms-1/files-1.1/appcompat-v7-25.0.0.aar/a8f4dd9adce9ade097adee237713cc2e/res/values-xlarge-v4/values-xlarge-v4.xml",
                     "from": {
-                        "startLines": "4,7,8,9,10,11,12",
-                        "startColumns": "4,4,4,4,4,4,4",
-                        "startOffsets": "282,587,651,718,785,851,917",
-                        "endColumns": "76,63,66,66,65,65,54",
-                        "endOffsets": "354,646,713,780,846,912,967"
-                    },
-                    "to": {
-                        "startLines": "2,3,4,5,6,7,8",
-                        "startColumns": "4,4,4,4,4,4,4",
-                        "startOffsets": "55,132,196,263,330,396,462",
-                        "endColumns": "76,63,66,66,65,65,54",
-                        "endOffsets": "127,191,258,325,391,457,512"
+                        "startLines": "2,3,4,5,6,7",
+                        "startColumns": "4,4,4,4,4,4",
+                        "startOffsets": "55,126,197,267,337,405",
+                        "endColumns": "70,70,69,69,67,67",
+                        "endOffsets": "121,192,262,332,400,468"
                     }
                 }
             ]

@@ -1,19 +1,17 @@
 import React, { Component } from 'react'
 import MapView, { PROVIDER_GOOGLE, } from 'react-native-maps'
-import { View, StyleSheet, Text, Button, Dimensions, AsyncStorage } from 'react-native'
+import { View, StyleSheet, Text, Button, Dimensions, AsyncStorage, TouchableHighlight, Share } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Modal from "react-native-modal";
 let { width, height } = Dimensions.get('window');
 import Aubergine from './MapStyles/Aubergine.json';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 
-
 const ASPECT_RATIO = width / height;
 const LATITUDE = 37.972547;
 const LONGITUDE = 23.734096;
 const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
-
 
 export default class feltUncomfortable extends Component {
   static navigationOptions = {
@@ -65,6 +63,17 @@ export default class feltUncomfortable extends Component {
     this.state.incidentDate=date
     this._finish();
   };
+
+  _onShare() {
+    Share.share({
+      message: 'I ',
+      url: '',
+      title: ''
+    }, {
+      dialogTitle: 'Share your Incident',
+    })
+  }
+
 
   onRegionChange(region) {
     this.setState({ region });
@@ -242,9 +251,11 @@ export default class feltUncomfortable extends Component {
               Your Incident has been recorded successfuly!{'\n'}{'\n'}Thank you for sharing your experience and helping yourshelf by helping others! Maybe you want to share your experience to your social media. 
               </Text>
               
+              <View style={{padding:20}}>
+                <Button color={"#888888"} onPress={() => {this._onShare()}} title={'Share incident'} />
+              </View>
               <Button color={"#b30059"} onPress={()=>{this._toggleModal(); this.props.navigation.navigate('HomePage')}} title={'Home'} />
-  
-  
+              
             </View>
           </Modal>
 

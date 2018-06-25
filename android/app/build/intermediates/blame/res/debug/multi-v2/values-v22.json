@@ -4,22 +4,14 @@
             "outputFile": "/Users/Nick/development/react_native/pestofrontend/android/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-v22/values-v22.xml",
             "map": [
                 {
-                    "source": "/Users/Nick/.gradle/caches/transforms-1/files-1.1/appcompat-v7-23.0.1.aar/6dc0381dff980c0b3a255e2d1e74da2d/res/values-v22/values-v22.xml",
+                    "source": "/Users/Nick/.gradle/caches/transforms-1/files-1.1/appcompat-v7-25.0.0.aar/a8f4dd9adce9ade097adee237713cc2e/res/values-v22/values-v22.xml",
                     "from": {
-                        "startLines": "4,5,6,9",
+                        "startLines": "2,3,4,9",
                         "startColumns": "4,4,4,4",
-                        "startOffsets": "285,360,447,628",
-                        "endLines": "4,5,8,11",
+                        "startOffsets": "55,130,217,553",
+                        "endLines": "2,3,8,13",
                         "endColumns": "74,86,12,12",
-                        "endOffsets": "355,442,623,816"
-                    },
-                    "to": {
-                        "startLines": "2,3,4,7",
-                        "startColumns": "4,4,4,4",
-                        "startOffsets": "55,130,217,398",
-                        "endLines": "2,3,6,9",
-                        "endColumns": "74,86,12,12",
-                        "endOffsets": "125,212,393,586"
+                        "endOffsets": "125,212,548,896"
                     }
                 }
             ]
@@ -28,22 +20,14 @@
             "outputFile": "/Users/Nick/development/react_native/pestofrontend/android/app/build/intermediates/res/merged/debug/values-v22/values-v22.xml",
             "map": [
                 {
-                    "source": "/Users/Nick/.gradle/caches/transforms-1/files-1.1/appcompat-v7-23.0.1.aar/6dc0381dff980c0b3a255e2d1e74da2d/res/values-v22/values-v22.xml",
+                    "source": "/Users/Nick/.gradle/caches/transforms-1/files-1.1/appcompat-v7-25.0.0.aar/a8f4dd9adce9ade097adee237713cc2e/res/values-v22/values-v22.xml",
                     "from": {
-                        "startLines": "4,5,6,9",
+                        "startLines": "2,3,4,9",
                         "startColumns": "4,4,4,4",
-                        "startOffsets": "285,360,447,628",
-                        "endLines": "4,5,8,11",
+                        "startOffsets": "55,130,217,553",
+                        "endLines": "2,3,8,13",
                         "endColumns": "74,86,12,12",
-                        "endOffsets": "355,442,623,816"
-                    },
-                    "to": {
-                        "startLines": "2,3,4,7",
-                        "startColumns": "4,4,4,4",
-                        "startOffsets": "55,130,217,398",
-                        "endLines": "2,3,6,9",
-                        "endColumns": "74,86,12,12",
-                        "endOffsets": "125,212,393,586"
+                        "endOffsets": "125,212,548,896"
                     }
                 }
             ]

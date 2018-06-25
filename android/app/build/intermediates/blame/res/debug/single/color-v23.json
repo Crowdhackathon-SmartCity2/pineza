@@ -1,6 +1,38 @@
 [
     {
+        "merged": "/Users/Nick/development/react_native/pestofrontend/android/app/build/intermediates/res/merged/debug/color-v23/abc_tint_spinner.xml",
+        "source": "/Users/Nick/.gradle/caches/transforms-1/files-1.1/appcompat-v7-25.0.0.aar/a8f4dd9adce9ade097adee237713cc2e/res/color-v23/abc_tint_spinner.xml"
+    },
+    {
+        "merged": "/Users/Nick/development/react_native/pestofrontend/android/app/build/intermediates/res/merged/debug/color-v23/abc_tint_switch_track.xml",
+        "source": "/Users/Nick/.gradle/caches/transforms-1/files-1.1/appcompat-v7-25.0.0.aar/a8f4dd9adce9ade097adee237713cc2e/res/color-v23/abc_tint_switch_track.xml"
+    },
+    {
+        "merged": "/Users/Nick/development/react_native/pestofrontend/android/app/build/intermediates/res/merged/debug/color-v23/abc_tint_btn_checkable.xml",
+        "source": "/Users/Nick/.gradle/caches/transforms-1/files-1.1/appcompat-v7-25.0.0.aar/a8f4dd9adce9ade097adee237713cc2e/res/color-v23/abc_tint_btn_checkable.xml"
+    },
+    {
+        "merged": "/Users/Nick/development/react_native/pestofrontend/android/app/build/intermediates/res/merged/debug/color-v23/abc_tint_switch_thumb.xml",
+        "source": "/Users/Nick/.gradle/caches/transforms-1/files-1.1/appcompat-v7-25.0.0.aar/a8f4dd9adce9ade097adee237713cc2e/res/color-v23/abc_tint_switch_thumb.xml"
+    },
+    {
+        "merged": "/Users/Nick/development/react_native/pestofrontend/android/app/build/intermediates/res/merged/debug/color-v23/abc_tint_default.xml",
+        "source": "/Users/Nick/.gradle/caches/transforms-1/files-1.1/appcompat-v7-25.0.0.aar/a8f4dd9adce9ade097adee237713cc2e/res/color-v23/abc_tint_default.xml"
+    },
+    {
+        "merged": "/Users/Nick/development/react_native/pestofrontend/android/app/build/intermediates/res/merged/debug/color-v23/abc_tint_edittext.xml",
+        "source": "/Users/Nick/.gradle/caches/transforms-1/files-1.1/appcompat-v7-25.0.0.aar/a8f4dd9adce9ade097adee237713cc2e/res/color-v23/abc_tint_edittext.xml"
+    },
+    {
+        "merged": "/Users/Nick/development/react_native/pestofrontend/android/app/build/intermediates/res/merged/debug/color-v23/abc_btn_colored_borderless_text_material.xml",
+        "source": "/Users/Nick/.gradle/caches/transforms-1/files-1.1/appcompat-v7-25.0.0.aar/a8f4dd9adce9ade097adee237713cc2e/res/color-v23/abc_btn_colored_borderless_text_material.xml"
+    },
+    {
         "merged": "/Users/Nick/development/react_native/pestofrontend/android/app/build/intermediates/res/merged/debug/color-v23/abc_color_highlight_material.xml",
-        "source": "/Users/Nick/.gradle/caches/transforms-1/files-1.1/appcompat-v7-23.0.1.aar/6dc0381dff980c0b3a255e2d1e74da2d/res/color-v23/abc_color_highlight_material.xml"
+        "source": "/Users/Nick/.gradle/caches/transforms-1/files-1.1/appcompat-v7-25.0.0.aar/a8f4dd9adce9ade097adee237713cc2e/res/color-v23/abc_color_highlight_material.xml"
+    },
+    {
+        "merged": "/Users/Nick/development/react_native/pestofrontend/android/app/build/intermediates/res/merged/debug/color-v23/abc_tint_seek_thumb.xml",
+        "source": "/Users/Nick/.gradle/caches/transforms-1/files-1.1/appcompat-v7-25.0.0.aar/a8f4dd9adce9ade097adee237713cc2e/res/color-v23/abc_tint_seek_thumb.xml"
     }
 ]

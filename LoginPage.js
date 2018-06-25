@@ -29,8 +29,8 @@ export default class LoginPage extends Component {
       },
       body: JSON.stringify({
         username: username,
-        email: 'q@mail.com',
-        password: 'qqqq1111'
+        email: email,
+        password: password
       })
     })
     .then((response) => response.json())
@@ -99,13 +99,22 @@ export default class LoginPage extends Component {
                 underlineColorAndroid={'#aaaaaa'}
 
             />
-            
+            <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+
+            <Button
+                title={'Register'}
+                onPress={()=> {this.props.navigation.navigate('RegistrationPage') }}
+                color={'#008080'}
+            />
+            <Text>         </Text>
             <Button
                 title={'Login'}
                 onPress={async ()=> { const res = await this.onLogin(); if(res != null) {this.props.navigation.navigate('HomePage')} }}
-              
                 color={'#b30059'}
             />
+            
+            </View>
+          
         </View>
     );
   }

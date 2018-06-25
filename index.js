@@ -7,6 +7,7 @@ import SettingsPage from './SettingsPage';
 import feltUncomfortable from './feltUncomfortable' ;
 import HomePage from './HomePage';
 import ReportPage from './ReportPage';
+import RegistrationPage from './RegistrationPage';
 
 
 YellowBox.ignoreWarnings(['Warning: isMounted(...) is deprecated', 'Module RCTImageLoader']);
@@ -17,7 +18,8 @@ const App = createStackNavigator({
     ReportPage: { screen: ReportPage },
     SettingsPage: { screen: SettingsPage },
     LiveMaps: { screen: LiveMaps },
-    feltUncomfortable: {screen: feltUncomfortable}
+    feltUncomfortable: {screen: feltUncomfortable},
+    RegistrationPage: {screen: RegistrationPage}
   }, 
   {initialRouteName: 'LoginPage'}
   );

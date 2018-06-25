@@ -4,15 +4,8 @@
             "outputFile": "/Users/Nick/development/react_native/pestofrontend/android/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-port/values-port.xml",
             "map": [
                 {
-                    "source": "/Users/Nick/.gradle/caches/transforms-1/files-1.1/appcompat-v7-23.0.1.aar/6dc0381dff980c0b3a255e2d1e74da2d/res/values-port/values-port.xml",
+                    "source": "/Users/Nick/.gradle/caches/transforms-1/files-1.1/appcompat-v7-25.0.0.aar/a8f4dd9adce9ade097adee237713cc2e/res/values-port/values-port.xml",
                     "from": {
-                        "startLines": "4",
-                        "startColumns": "4",
-                        "startOffsets": "280",
-                        "endColumns": "55",
-                        "endOffsets": "331"
-                    },
-                    "to": {
                         "startLines": "2",
                         "startColumns": "4",
                         "startOffsets": "55",
@@ -26,15 +19,8 @@
             "outputFile": "/Users/Nick/development/react_native/pestofrontend/android/app/build/intermediates/res/merged/debug/values-port/values-port.xml",
             "map": [
                 {
-                    "source": "/Users/Nick/.gradle/caches/transforms-1/files-1.1/appcompat-v7-23.0.1.aar/6dc0381dff980c0b3a255e2d1e74da2d/res/values-port/values-port.xml",
+                    "source": "/Users/Nick/.gradle/caches/transforms-1/files-1.1/appcompat-v7-25.0.0.aar/a8f4dd9adce9ade097adee237713cc2e/res/values-port/values-port.xml",
                     "from": {
-                        "startLines": "4",
-                        "startColumns": "4",
-                        "startOffsets": "280",
-                        "endColumns": "55",
-                        "endOffsets": "331"
-                    },
-                    "to": {
                         "startLines": "2",
                         "startColumns": "4",
                         "startOffsets": "55",
