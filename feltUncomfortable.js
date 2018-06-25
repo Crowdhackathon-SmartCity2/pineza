@@ -42,7 +42,8 @@ export default class feltUncomfortable extends Component {
       key1: "",
       isDateTimePickerVisible: false,
       category: null,
-      username: null
+      username: null,
+      info: ""
     }
     this.onRegionChange = this.onRegionChange.bind(this);
     this.moveMaptoLocation = this.moveMaptoLocation.bind(this);
@@ -96,6 +97,9 @@ export default class feltUncomfortable extends Component {
     })
     AsyncStorage.getItem('@MySuperStore:username').then((token) => {
       this.setState({username : token})
+    })
+    AsyncStorage.getItem('@MySuperStore:info').then((token) => {
+      this.setState({info : token})
     })
 
     navigator.geolocation.getCurrentPosition(
@@ -156,7 +160,7 @@ export default class feltUncomfortable extends Component {
           latitude: lat_save,
           longitude: lon_save,
           category: this.state.category,
-          info: this.state.incidentDate,
+          info: this.state.incidentDate+"\n, "+this.state.info,
           time: this.state.incidentDate
         })
       })

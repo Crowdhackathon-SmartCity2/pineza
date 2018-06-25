@@ -93,13 +93,12 @@ export default class ReportPage extends Component {
   _toggleModal4 = async () =>{
     try {
       await AsyncStorage.setItem('@MySuperStore:category', 'Other');
-      // await AsyncStorage.setItem('@MySuperStore:info', this.state.info);
     } catch (error) {
       console.log("Error saving data" + error);
     }
     this.state.incidentType = 'Other';
-    // this.setState({ isModalVisible: !this.state.isModalVisible });
-    this.props.navigation.navigate('feltUncomfortable')
+    this.setState({ isModalVisible: !this.state.isModalVisible });
+    // this.props.navigation.navigate('feltUncomfortable')
   }
 
     render () {
@@ -128,7 +127,16 @@ export default class ReportPage extends Component {
               onChangeText={ (e) => {this.state.info=e} }
               autoFocus={true}
               />
-              <Button color={"#b30059"} title={'Next'} onPress={() =>{this._toggleModal(); this.props.navigation.navigate('feltUncomfortable');}}/>
+              <Button color={"#b30059"} title={'Next'} onPress={async () =>{
+                try {
+                  await AsyncStorage.setItem('@MySuperStore:info', this.state.info);
+                } 
+                catch (error) {
+                  console.log("Error saving data" + error);
+                }
+                this._toggleModal(); 
+                this.props.navigation.navigate('feltUncomfortable');
+              }}/>
             </View>
           </Modal>
         </View> 
