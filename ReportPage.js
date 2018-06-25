@@ -8,6 +8,7 @@ import {
   Dimensions,
   Button,
   TextInput,  
+  AsyncStorage
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 // Check icons here https://fontawesome.com/v4.7.0/icons/
@@ -41,36 +42,64 @@ export default class ReportPage extends Component {
     title: 'What happend?',
     headerTintColor: '#FFFFFF',
     headerTitleStyle:{ color:'#FFFFFF' },
-    headerStyle:{ backgroundColor:'#232323' },
+    headerStyle:{ backgroundColor:'#33001a' },
   };
 
   state = {
     isModalVisible: false,
-    feltUncomfortableDescription: null,
+    info: null,
     incidentType: null
   };
 
   _toggleModal = () =>
     this.setState({ isModalVisible: !this.state.isModalVisible });
 
-  _toggleModal1 = () =>{
+  _toggleModal1 = async () =>{
+    try {
+      await AsyncStorage.setItem('@MySuperStore:category', 'Felt Uncomfortable');
+      // await AsyncStorage.setItem('@MySuperStore:info', this.state.info);
+    } catch (error) {
+      console.log("Error saving data" + error);
+    } 
     this.state.incidentType = 'Felt Uncomfortable';
-    this.setState({ isModalVisible: !this.state.isModalVisible });
+    // this.setState({ isModalVisible: !this.state.isModalVisible });
+    this.props.navigation.navigate('feltUncomfortable')
   }
 
-  _toggleModal2 = () =>{
+  _toggleModal2 = async () =>{
+    try {
+      await AsyncStorage.setItem('@MySuperStore:category', 'Theft');
+      // await AsyncStorage.setItem('@MySuperStore:info', this.state.info);
+    } catch (error) {
+      console.log("Error saving data" + error);
+    } 
     this.state.incidentType = 'Theft';
-    this.setState({ isModalVisible: !this.state.isModalVisible });
+    // this.setState({ isModalVisible: !this.state.isModalVisible });
+    this.props.navigation.navigate('feltUncomfortable')
   }
 
-  _toggleModal3 = () =>{
+  _toggleModal3 = async () =>{
+    try {
+      await AsyncStorage.setItem('@MySuperStore:category', 'Robbery');
+      // await AsyncStorage.setItem('@MySuperStore:info', this.state.info);
+    } catch (error) {
+      console.log("Error saving data" + error);
+    }
     this.state.incidentType = 'Robbery';
-    this.setState({ isModalVisible: !this.state.isModalVisible });
+    // this.setState({ isModalVisible: !this.state.isModalVisible });
+    this.props.navigation.navigate('feltUncomfortable')
   }
 
-  _toggleModal4 = () =>{
+  _toggleModal4 = async () =>{
+    try {
+      await AsyncStorage.setItem('@MySuperStore:category', 'Other');
+      // await AsyncStorage.setItem('@MySuperStore:info', this.state.info);
+    } catch (error) {
+      console.log("Error saving data" + error);
+    }
     this.state.incidentType = 'Other';
-    this.setState({ isModalVisible: !this.state.isModalVisible });
+    // this.setState({ isModalVisible: !this.state.isModalVisible });
+    this.props.navigation.navigate('feltUncomfortable')
   }
 
     render () {
@@ -96,7 +125,7 @@ export default class ReportPage extends Component {
                 fontSize:18, 
                 textAlign: 'center',
               }} 
-              onChangeText={ (e) => {this.state.feltUncomfortableDescription=e} }
+              onChangeText={ (e) => {this.state.info=e} }
               autoFocus={true}
               />
               <Button color={"#b30059"} title={'Next'} onPress={() =>{this._toggleModal(); this.props.navigation.navigate('feltUncomfortable');}}/>

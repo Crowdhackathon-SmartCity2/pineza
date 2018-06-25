@@ -10,12 +10,13 @@ export default class SettingsPage extends Component {
         title: 'Settings',
         headerTintColor: '#FFFFFF',
         headerTitleStyle:{ color:'#FFFFFF' },
-        headerStyle:{ backgroundColor:'#232323' },
+        headerStyle:{ backgroundColor:'#33001a' },
       };
 
       state = {
         isModalVisible: false,
-        key1: "013aa437ba8e0a9703750962fa75dcdee21be9bd"
+        key1: "",
+        username: ""
       };
     
       _toggleModal = () =>
@@ -23,11 +24,11 @@ export default class SettingsPage extends Component {
 
 
      componentDidMount() {
-       AsyncStorage.getItem('key').then((token) => {
+       AsyncStorage.getItem('@MySuperStore:key').then((token) => {
          this.setState({key1 : token})})
-       }
-
-
+       AsyncStorage.getItem('@MySuperStore:username').then((token) => {
+        this.setState({username : token})})
+      }
        onLogout = async () => {
         await fetch('http://192.168.2.6:8000/api-auth/logout/', {
       method: 'POST',
@@ -36,7 +37,7 @@ export default class SettingsPage extends Component {
         'Content-Type': 'application/json',
      },
     body: JSON.stringify({
-    token: "013aa437ba8e0a9703750962fa75dcdee21be9bd",
+    token: this.state.key1,
   })
 }).then((response) => response.json())
 .then((responseJson) => {
@@ -52,7 +53,7 @@ export default class SettingsPage extends Component {
     render() {
       return (
         <Container>
-          <SettingsList key1={this.state.key1} info={this._toggleModal} onLogout={this.onLogout} />
+          <SettingsList username={this.state.username} key1={this.state.key1} info={this._toggleModal} onLogout={this.onLogout} />
 
             <Modal 
             isVisible={this.state.isModalVisible}
@@ -107,18 +108,6 @@ class SettingsList extends Component {
 
             <ListItem icon>
               <Left>
-                <Icon type="FontAwesome" name="map-signs" />
-              </Left>
-              <Body>
-                <Text>City/Region</Text>
-              </Body>
-              <Right>
-                <Text>Athens</Text>
-              </Right>
-            </ListItem>
-
-            <ListItem icon>
-              <Left>
                 <Icon type="FontAwesome"  name="street-view" />
               </Left>
               <Body>
@@ -155,6 +144,30 @@ class SettingsList extends Component {
               </Right>
             </ListItem>
 
+            <ListItem icon>
+              <Left>
+                <Icon type="FontAwesome" name="user"/>
+              </Left>
+              <Body>
+                <Text>Username</Text>
+              </Body>
+              <Right>
+                <Text>{this.props.username}</Text>
+              </Right>
+            </ListItem>
+
+            <ListItem icon>
+              <Left>
+                <Icon type="FontAwesome" name="key"/>
+              </Left>
+              <Body>
+                <Text>Key</Text>
+              </Body>
+              <Right>
+              <Text style={{fontSize:10}}>{this.props.key1}</Text>
+            </Right>
+            </ListItem>
+
             <ListItem icon onPress={()=>{this.props.onLogout()}}>
               <Left>
                 <Icon type="FontAwesome" name="sign-out" />
@@ -163,14 +176,7 @@ class SettingsList extends Component {
                 <Text>Sign-Out</Text>
               </Body>
             </ListItem>
-            <ListItem icon>
-              <Left>
-                <Icon type="FontAwesome" name="sign-out" />
-              </Left>
-              <Body>
-                <Text>Key {this.props.key1} </Text>
-              </Body>
-            </ListItem>
+      
           </List>
         </Content>
     )

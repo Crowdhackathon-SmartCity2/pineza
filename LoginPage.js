@@ -13,39 +13,45 @@ export default class LoginPage extends Component {
     
     this.state = {
       username: '',
-      Email: '',
+      email: '',
       password: '',
       key: null
     };
   }
   
-   onLogin = async () => {
-    const { username, Email, password } = this.state;
-    await fetch('http://192.168.2.6:8000/api-auth/login/', {
+  onLogin = async () => {
+    const { username, email, password } = this.state;
+    await fetch('https://pestoapp.herokuapp.com/api-auth/login/', {
       method: 'POST',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
-     },
-    body: JSON.stringify({
-    username: username,
-    email: "dervenis@mail.com",
-    password: "nikos1994"
-  })
-}).then((response) => response.json())
-.then((responseJson) => {
-  console.log("Response",responseJson)
-  this.state.key = responseJson.key;
-})
-.catch((error) => {
-  console.error(error);
-})
-  console.log("key",this.state.key)
-  try {
-    await AsyncStorage.setItem('@MySuperStore:key', this.state.key);
-  } catch (error) {
-    console.log("Error saving data" + error);
-}
+      },
+      body: JSON.stringify({
+        username: username,
+        email: 'q@mail.com',
+        password: 'qqqq1111'
+      })
+    })
+    .then((response) => response.json())
+    .then((responseJson) => {
+      console.log("Response",responseJson)
+      this.state.key = responseJson.key;
+    })
+    .catch((error) => {
+      console.error(error);
+    })
+    console.log("key",this.state.key)
+    try {
+      await AsyncStorage.setItem('@MySuperStore:key', this.state.key);
+    } catch (error) {
+      console.log("Error saving data" + error);
+    }   
+    try {
+      await AsyncStorage.setItem('@MySuperStore:username', this.state.username);
+    } catch (error) {
+      console.log("Error saving data" + error);
+    }
   return this.state.key
 }
 
@@ -76,7 +82,7 @@ export default class LoginPage extends Component {
             />
             <TextInput
                 value={this.state.Email}
-                onChangeText={(Email) => this.setState({ Email })}
+                onChangeText={(email) => this.setState({ email })}
                 placeholder={'Email'}
                 style={styles.input}
                 placeholderTextColor={'#aaaaaa'}
@@ -111,7 +117,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#4d0026',
+    backgroundColor: '#33001a',
   },
   title:{
       fontSize: 50,

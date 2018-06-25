@@ -5,11 +5,12 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import Modal from "react-native-modal";
 let { width, height } = Dimensions.get('window');
 import Aubergine from './MapStyles/Aubergine.json';
+import DateTimePicker from 'react-native-modal-datetime-picker';
 
 
 const ASPECT_RATIO = width / height;
-const LATITUDE = 0;
-const LONGITUDE = 0;
+const LATITUDE = 37.972547;
+const LONGITUDE = 23.734096;
 const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
@@ -19,7 +20,7 @@ export default class feltUncomfortable extends Component {
     title: "Drag to inciden's location",
     headerTintColor: '#FFFFFF',
     headerTitleStyle:{ color:'#FFFFFF' },
-    headerStyle:{ backgroundColor:'#232323' },
+    headerStyle:{ backgroundColor:'#33001a' },
   };
 
   constructor(props) {
@@ -32,24 +33,16 @@ export default class feltUncomfortable extends Component {
           latitudeDelta: LATITUDE_DELTA,
           longitudeDelta: LONGITUDE_DELTA
       },
-      markers: [
-        {
-          latlng: {latitude: 37.975547, longitude: 23.734096},
-          title: "Robbery",
-          description: "They stole my wallet!"
-        },
-        {
-          latlng: {latitude: 37.977297, longitude: 23.735825},
-          title: "Felt Uncomfortable",
-          description: "There was a guy yelling at me!"
-        },
-      ],
       userLatitude: null,
       userLongitude: null,
       error: null,
       incidentLatitude: null,
       incidentLongitude: null,
-      key1: ""
+      incidentDate: null,
+      key1: "",
+      isDateTimePickerVisible: false,
+      category: null,
+      username: null
     }
     this.onRegionChange = this.onRegionChange.bind(this);
     this.moveMaptoLocation = this.moveMaptoLocation.bind(this);
@@ -62,7 +55,15 @@ export default class feltUncomfortable extends Component {
   _toggleModal = () =>
     this.setState({ isModalVisible: !this.state.isModalVisible });
 
+  _showDateTimePicker = () => this.setState({ isDateTimePickerVisible: true });
 
+  _hideDateTimePicker = () => this.setState({ isDateTimePickerVisible: false });
+
+  _handleDatePicked = (date) => {
+    console.log('A date has been picked: ', date);
+    this.state.incidentDate=date
+    this._finish();
+  };
 
   onRegionChange(region) {
     this.setState({ region });
@@ -87,9 +88,15 @@ export default class feltUncomfortable extends Component {
 
   
   componentDidMount() {
-
-      AsyncStorage.getItem('@MySuperStore:key').then((token) => {
-        this.setState({key1 : token})})
+    AsyncStorage.getItem('@MySuperStore:key').then((token) => {
+    this.setState({key1 : token})
+    })
+    AsyncStorage.getItem('@MySuperStore:category').then((token) => {
+      this.setState({category : token})
+    })
+    AsyncStorage.getItem('@MySuperStore:username').then((token) => {
+      this.setState({username : token})
+    })
 
     navigator.geolocation.getCurrentPosition(
       position => {
@@ -124,35 +131,41 @@ export default class feltUncomfortable extends Component {
   }
 
   async _finish(){
-    console.log("_finish")
-    if (this.state.incidentLatitude==null || this.state.incidentLongitude==null) {
-      this.state.incidentLatitude=this.state.region.latitude;
-      this.state.incidentLongitude=this.state.region.longitude; 
-      await fetch('http://192.168.2.6:8000/pin/', {
+
+    var lat_save;
+    var lon_save;
+
+    if (this.state.incidentLatitude!=null && this.state.incidentLongitude!=null) {
+      lat_save=this.state.incidentLatitude;
+      lon_save=this.state.incidentLongitude;
+    } 
+    else {
+      lat_save = this.state.region.latitude
+      lon_save = this.state.region.longitude
+    }
+      await fetch('https://pestoapp.herokuapp.com/pin/', {
         method: 'POST',
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
           Authorization: 'Token '+this.state.key1
-       },
-      body: JSON.stringify({
-      user: "derv1994",
-      area: "Center",
-      longitude: "13213.132",
-      latitude: "1311.23",
-      category: 'Uncomfortable',
-      info: 'This is a test',
-      time: '2007-03-01T13:00:00'
-    })
-    }).then((response) => response.json())
-    .then((responseJson) => {
-      console.log("Feedback",responseJson)
-    });
+         },
+        body: JSON.stringify({
+          user: this.state.username,
+          area: "undefined",
+          latitude: lat_save,
+          longitude: lon_save,
+          category: this.state.category,
+          info: this.state.incidentDate,
+          time: this.state.incidentDate
+        })
+      })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        console.log("Feedback",responseJson)
+      });
+      this._hideDateTimePicker();
       this._toggleModal();
-    }
-    else {
-      this._toggleModal();
-    }
   }
 
 
@@ -174,8 +187,7 @@ export default class feltUncomfortable extends Component {
         <View style={styles.container}>
 
           <MapView style={styles.map}
-            // initialRegion={initialRegion}
-            // region={this.state.region}
+            initialRegion={initialRegion}
             // onRegionChange={this.onRegionChange}
             region={ this.state.region }
             onRegionChangeComplete= {region => this.setState({region})}
@@ -199,9 +211,17 @@ export default class feltUncomfortable extends Component {
             
 
             </MapView>
-           <View style={{position: "absolute", bottom: 40, right: 40}}>
-          <Button  onPress={()=>{this._finish()}} title="Finish" color={'#99004d'} />
+           <View style={{position: "absolute", bottom: 40, right: 40, backgroundColor: 'black', borderRadius: 3}}>
+           <Text style={{color:'white'}}> Last Step! </Text>
+          <Button  onPress={()=>{this._showDateTimePicker()}} title="Pick Date & Time" color={'#99004d'} />
           </View>
+
+          <DateTimePicker
+          isVisible={this.state.isDateTimePickerVisible}
+          onConfirm={this._handleDatePicked}
+          onCancel={this._hideDateTimePicker}
+          mode={"datetime"}
+          />
 
         
           <Modal 
@@ -216,7 +236,6 @@ export default class feltUncomfortable extends Component {
               <Icon name={"check-circle"}  size={40} color="#00ff99"/>
               <Text style={{color: '#33ffff', padding:20, textAlign: 'center', fontSize: 15}} > 
               Your Incident has been recorded successfuly!{'\n'}{'\n'}Thank you for sharing your experience and helping yourshelf by helping others! Maybe you want to share your experience to your social media. 
-              {'\n'}{'\n'}latitude: {this.state.incidentLatitude}{'\n'}longitude: {this.state.incidentLongitude}
               </Text>
               
               <Button color={"#b30059"} onPress={()=>{this._toggleModal(); this.props.navigation.navigate('HomePage')}} title={'Home'} />

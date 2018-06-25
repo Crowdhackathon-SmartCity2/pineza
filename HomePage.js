@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {StyleSheet, Text, View, TouchableHighlight, TouchableOpacity,
   TouchableWithoutFeedback,
   StatusBar,
+  AsyncStorage
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Octicons';
 import SettingsPage from './SettingsPage';
@@ -33,7 +34,36 @@ class HomePageRow extends Component {
 }
 
 export default class HomePage extends Component {
+  constructor(props) {
+    super(props);
+    
+    this.state = {
+      jsona: ''
+    };
+  }
 
+  _LiveMaps = async () => {
+    var a;
+    await fetch('https://pestoapp.herokuapp.com/pin/', {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: 'Token f6618056257d660e3b88eef22c033cd19edf8172'
+      },
+    })
+    .then((response) => response.json())
+    .then((response) => {
+      console.log("Feedback",response)
+      this.state.jsona = JSON.stringify(response)
+    })
+      try {
+        await AsyncStorage.setItem('@MySuperStore:pins', this.state.jsona);
+      } catch (error) {
+        console.log("Error saving data" + error);
+      }  
+      this.props.navigation.navigate('LiveMaps')
+  }
   
   static navigationOptions = { header: null };
   render () {
@@ -45,7 +75,7 @@ export default class HomePage extends Component {
         <HomePageRow style={styles.HomePageIncident} textStyle1={[styles.StyleText1, {color: '#FFFFFF'}]} 
         textStyle2={[styles.StyleText2, {color: '#FFFFFF'}]} text1={INCIDENT_1} text2={INCIDENT_2} text3={INCIDENT_3} onPress={() =>this.props.navigation.navigate('ReportPage')}/>
         <HomePageRow style={styles.HomePageLive} textStyle1={[styles.StyleText1, {color: '#000000'}]} 
-        textStyle2={[styles.StyleText2, {color: '#000000'}]} text1={LIVE_1} text2={LIVE_2} text3={LIVE_3} onPress={() =>this.props.navigation.navigate('LiveMaps')} />
+        textStyle2={[styles.StyleText2, {color: '#000000'}]} text1={LIVE_1} text2={LIVE_2} text3={LIVE_3} onPress={() =>this._LiveMaps()} />
         <Settings SettingsButton={() =>this.props.navigation.navigate('SettingsPage')}/>
       </View>
 

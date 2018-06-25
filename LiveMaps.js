@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import MapView, { PROVIDER_GOOGLE, } from 'react-native-maps'
-import { View, StyleSheet, Text, TouchableOpacity, Dimensions, Button } from 'react-native'
+import { View, StyleSheet, Text, TouchableOpacity, Dimensions, Button, AsyncStorage } from 'react-native'
 let { width, height } = Dimensions.get('window');
 
 
@@ -16,7 +16,7 @@ export default class LiveMaps extends Component {
     title: "Discover Incidents (Live)",
     headerTintColor: '#FFFFFF',
     headerTitleStyle:{ color:'#FFFFFF' },
-    headerStyle:{ backgroundColor:'#232323' },
+    headerStyle:{ backgroundColor:'#33001a' },
   };
 
   constructor(props) {
@@ -29,21 +29,11 @@ export default class LiveMaps extends Component {
           latitudeDelta: LATITUDE_DELTA,
           longitudeDelta: LONGITUDE_DELTA
       },
-      markers: [
-        {
-          latlng: {latitude: 37.975547, longitude: 23.734096},
-          title: "Robbery",
-          description: "They stole my wallet!"
-        },
-        {
-          latlng: {latitude: 37.977297, longitude: 23.735825},
-          title: "Felt Uncomfortable",
-          description: "There was a guy yelling at me!"
-        },
-      ],
+      markers: [],
       userLatitude: null,
       userLongitude: null,
-      error: null
+      error: null,
+      pins: []
     }
     this.onRegionChange = this.onRegionChange.bind(this);
     this.moveMaptoLocation = this.moveMaptoLocation.bind(this);
@@ -74,6 +64,14 @@ export default class LiveMaps extends Component {
   
  
   componentDidMount() {
+
+    AsyncStorage.getItem('@MySuperStore:pins').then((pins) => {
+      pinsJson = JSON.parse(pins)
+      this.setState({markers : pinsJson})
+      console.log(this.state.markers)
+    })
+    
+
     navigator.geolocation.getCurrentPosition(
       position => {
         this.setState({
@@ -107,26 +105,6 @@ export default class LiveMaps extends Component {
   }
 
 
-
-
-  async _finish(){
-    console.log("_finish")
-      await fetch('http://192.168.2.6:8000/pin/', {
-        method: 'GET',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-          Authorization: 'Token 013aa437ba8e0a9703750962fa75dcdee21be9bd'
-       },
-    }).then((response) => response.json())
-    .then((responseJson) => {
-      console.log("Feedback",responseJson)
-    });
-    }
-    
-  
-
-
   render() {
 
     var initialRegion={
@@ -144,10 +122,10 @@ export default class LiveMaps extends Component {
       return (
         <View style={styles.container}>
 
-          <MapView style={styles.map}
+         <MapView style={styles.map}
             initialRegion={initialRegion}
             // region={this.state.region}
-            // onRegionChange={this.onRegionChange}
+            // onRegionChange={this.onRegionCharnge}
             showsUserLocation={true}
             showsMyLocationButton={true}
             liteMode={false}
@@ -158,16 +136,21 @@ export default class LiveMaps extends Component {
 
           >
             
-            {this.state.markers.map((marker,i) => (
+          
+
+          {this.state.markers.map((marker,i) => (
               <MapView.Marker key={i}
-              coordinate={marker.latlng}
-              title={marker.title}
-              description={marker.description}
+              coordinate={{latitude: marker.latitude, longitude: marker.longitude}}
+              title={marker.category}
+              description={marker.info}
               />
             ))}
+          
 
           </MapView>
+        
 
+       
           {/*<View style={styles.container}>
             {this.state.markers.map((marker,i) => (
             <LocationButton key={i}
@@ -181,8 +164,6 @@ export default class LiveMaps extends Component {
             marker={userMarker}/>
             {this.state.error ? <Text>Error: {this.state.error}</Text> : null}
           </View> */}
-
-          <Button onPress={()=>this._finish()} title="tdf" style={{position:'absolute', bottom:0}}/>
         </View>
       );
   }
