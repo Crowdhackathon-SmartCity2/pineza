@@ -143,6 +143,7 @@ export default class LiveMaps extends Component {
               coordinate={{latitude: marker.latitude, longitude: marker.longitude}}
               title={marker.category}
               description={marker.info}
+              pinColor = {marker.area}
               />
             ))}
           

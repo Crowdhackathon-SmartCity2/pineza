@@ -102,7 +102,7 @@ export default class HomePage extends Component {
       <StatusBar hidden={true}/> 
 
         <HomePageRow style={styles.HomePageIncident} textStyle1={[styles.StyleText1, {color: '#FFFFFF'}]} 
-        textStyle2={[styles.StyleText2, {color: '#FFFFFF'}]} text1={INCIDENT_1} text2={INCIDENT_2} text3={INCIDENT_3} onPress={() =>this.props.navigation.navigate('ReportPage')}/>
+        textStyle2={[styles.StyleText2, {color: '#FFFFFF'}]} text1={INCIDENT_1} text2={INCIDENT_2} text3={INCIDENT_3} onPress={() =>this.props.navigation.navigate('feltUncomfortable')}/>
         <HomePageRow style={styles.HomePageLive} textStyle1={[styles.StyleText1, {color: '#000000'}]} 
         textStyle2={[styles.StyleText2, {color: '#000000'}]} text1={LIVE_1} text2={LIVE_2} text3={LIVE_3} onPress={() =>this._LiveMaps()} />
         <Settings SettingsButton={() =>this.props.navigation.navigate('SettingsPage')}/>

@@ -39,20 +39,26 @@ export default class feltUncomfortable extends Component {
       incidentDate: null,
       key1: "",
       isDateTimePickerVisible: false,
-      category: null,
+      category: '',
       email: null,
-      info: ""
+      info: "",
+      pinezaColor: 'red',
+      isModalVisible: false,
+      isChoiceVisible: true
     }
     this.onRegionChange = this.onRegionChange.bind(this);
     this.moveMaptoLocation = this.moveMaptoLocation.bind(this);
   }
 
   state = {
-    isModalVisible: false
+    
   };
 
   _toggleModal = () =>
     this.setState({ isModalVisible: !this.state.isModalVisible });
+
+  _toggleChoice = () =>
+    this.setState({ isChoiceVisible: !this.state.isChoiceVisible });
 
   _showDateTimePicker = () => this.setState({ isDateTimePickerVisible: true });
 
@@ -61,7 +67,7 @@ export default class feltUncomfortable extends Component {
   _handleDatePicked = (date) => {
     console.log('A date has been picked: ', date);
     this.state.incidentDate=date
-    this._finish();
+    this._hideDateTimePicker();
   };
 
   _onShare() {
@@ -101,15 +107,15 @@ export default class feltUncomfortable extends Component {
     AsyncStorage.getItem('@MySuperStore:key').then((token) => {
     this.setState({key1 : token})
     })
-    AsyncStorage.getItem('@MySuperStore:category').then((token) => {
-      this.setState({category : token})
-    })
+    // AsyncStorage.getItem('@MySuperStore:category').then((token) => {
+    //   this.setState({category : token})
+    // })
     AsyncStorage.getItem('@MySuperStore:email').then((token) => {
       this.setState({email : token})
     })
-    AsyncStorage.getItem('@MySuperStore:info').then((token) => {
-      this.setState({info : token})
-    })
+    // AsyncStorage.getItem('@MySuperStore:info').then((token) => {
+    //   this.setState({info : token})
+    // })
 
     navigator.geolocation.getCurrentPosition(
       position => {
@@ -165,11 +171,11 @@ export default class feltUncomfortable extends Component {
          },
         body: JSON.stringify({
           user: this.state.email,
-          area: "undefined",
+          area: this.state.pinezaColor,
           latitude: lat_save,
           longitude: lon_save,
           category: this.state.category,
-          info: this.state.incidentDate+"\n, "+this.state.info,
+          info: this.state.incidentDate+"\n ",
           time: this.state.incidentDate
         })
       })
@@ -177,8 +183,8 @@ export default class feltUncomfortable extends Component {
       .then((responseJson) => {
         console.log("Feedback",responseJson)
       });
-      this._hideDateTimePicker();
       this._toggleModal();
+      
   }
 
 
@@ -216,7 +222,7 @@ export default class feltUncomfortable extends Component {
           <MapView.Marker 
             coordinate={this.state.region}
             title={"Felt Uncomfortable"}
-            pinColor = 'blue'
+            pinColor = {this.state.pinezaColor}
             opacity={1.0}
             draggable
             onDragEnd={(e)=>{this.state.incidentLatitude=e.nativeEvent.coordinate.latitude; this.state.incidentLongitude=e.nativeEvent.coordinate.longitude}}
@@ -233,25 +239,12 @@ export default class feltUncomfortable extends Component {
             }}>
 
            {/* <Text style={{color:'white'}}> Last Step! </Text> */}
-          <Button  onPress={()=>{this._showDateTimePicker()}} title="Pick Date & Time" color={'#99004d'} />
+          <Button  onPress={()=>{this._finish()}} title="Finish" color={'#99004d'} />
           
           </View>
 
 
-          <View style={{
-            position: "absolute", 
-            top: 40,  
-            backgroundColor: 'white', 
-            borderRadius: 3
-           }}>
-          <Picker
-            selectedValue={this.state.language}
-            style={{ height: 50, width: 100 }}
-            onValueChange={(itemValue, itemIndex) => this.setState({language: itemValue})}>
-            <Picker.Item label="Java" value="java" />
-            <Picker.Item label="JavaScript" value="js" />
-          </Picker>
-          </View>
+          
 
           <DateTimePicker
           isVisible={this.state.isDateTimePickerVisible}
@@ -280,6 +273,46 @@ export default class feltUncomfortable extends Component {
               </View>
               <Button color={"#b30059"} onPress={()=>{this._toggleModal(); this.props.navigation.navigate('HomePage')}} title={'Home'} />
               
+            </View>
+          </Modal>
+
+          <Modal 
+          isVisible={this.state.isChoiceVisible}
+          backdropColor={'#33001a'}
+          backdropOpacity={0.85}
+          onBackButtonPress={this._toggleChoice}
+          style={styles.infoModal}
+          >
+            <View style={styles.infoView}>
+              <Text style={{color: '#33ffff', paddingBottom:50, textAlign: 'center', fontSize:23}}>What happend?</Text>
+              <Button color={"#b38f00"} onPress={()=>{this.state.category = 'Felt Uncomfortable'; this.state.pinezaColor = "yellow"; this._toggleChoice(); this._showDateTimePicker()}} title={'Just felt uncomfortable'} />
+              <Text style={{color: '#33ffff', paddingTop :50, textAlign: 'center', fontSize: 20}} > 
+                OR
+              </Text>
+              <Text style={{color: '#33ffff', paddingBottom:45, textAlign: 'center', fontSize: 18}} > 
+                Choose one of the incedents below {'\n'}and then press next
+              </Text>
+
+              <View style={{
+                backgroundColor: '#ffe6f2', 
+                borderRadius: 3,
+          
+               }}>
+              <Picker
+                selectedValue={this.state.category}
+                style={{ height: 35, width: 250 }}
+                onValueChange={(itemValue, itemIndex) => this.setState({category: itemValue})}>
+                <Picker.Item label="Pickpocket" value="Pickpocket" />
+                <Picker.Item label="Robbery 1" value="Robbery 1" />
+                <Picker.Item label="Robbery 2" value="Robbery 2" />
+                <Picker.Item label="Robbery 3" value="Robbery 3" />
+              </Picker>
+              </View>
+
+              <View style={{padding:10}}>
+              
+              <Button color={"#b30059"} onPress={()=>{this._toggleChoice();  this._showDateTimePicker()}} title={'next'} />
+              </View>
             </View>
           </Modal>
 

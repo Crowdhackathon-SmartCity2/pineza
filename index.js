@@ -21,7 +21,7 @@ const App = createStackNavigator({
     feltUncomfortable: {screen: feltUncomfortable},
     RegistrationPage: {screen: RegistrationPage}
   }, 
-  {initialRouteNamecd: 'LoginPage'}
+  {initialRouteName: 'LoginPage'}
   );
   
 
