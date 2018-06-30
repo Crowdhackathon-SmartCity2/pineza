@@ -6,7 +6,20 @@ import {StyleSheet, Text, View, TouchableHighlight, TouchableOpacity,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Octicons';
 import SettingsPage from './SettingsPage';
+// import BackgroundTask from 'react-native-background-task'
 
+
+// BackgroundTask.define(async () => {
+//   // Fetch some data over the network which we want the user to have an up-to-
+//   // date copy of, even if they have no network when using the app
+//   const response = await fetch('https://pestoapp.herokuapp.com/')
+//   const text = await response.text()
+  
+//   // Data persisted to AsyncStorage can later be accessed by the foreground app
+  
+//   // Remember to call finish()
+//   BackgroundTask.finish()
+// })
 
 
 let INCIDENT_1 = "Tap here to "
@@ -38,8 +51,24 @@ export default class HomePage extends Component {
     super(props);
     
     this.state = {
-      jsona: ''
+      jsona: '',
+      key1: null
     };
+  }
+
+  componentDidMount() {
+    AsyncStorage.getItem('@MySuperStore:key').then((token) => {
+    this.setState({key1 : token})
+    })
+
+
+
+    // BackgroundTask.schedule({
+    //   period: 10, // Aim to run every 30 mins - more conservative on battery
+    // })
+    
+    // // Optional: Check if the device is blocking background tasks or not
+    // this.checkStatus()
   }
 
   _LiveMaps = async () => {
@@ -49,7 +78,7 @@ export default class HomePage extends Component {
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
-        Authorization: 'Token f6618056257d660e3b88eef22c033cd19edf8172'
+        Authorization: 'Token '+this.state.key1
       },
     })
     .then((response) => response.json())

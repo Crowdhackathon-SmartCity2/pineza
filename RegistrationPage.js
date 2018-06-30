@@ -39,6 +39,9 @@ export default class RegistrationPage extends Component {
     .then((responseJson) => {
       console.log("Response",responseJson)
       this.state.key = responseJson.key;
+      if(responseJson.key==undefined){
+        alert('Invalid Credentials. Please enter a valid Username and Email. Password should contain at least 8 digits both letter and numeric. ')
+      }
     })
     .catch((error) => {
       console.error(error);

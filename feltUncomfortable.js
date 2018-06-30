@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import MapView, { PROVIDER_GOOGLE, } from 'react-native-maps'
-import { View, StyleSheet, Text, Button, Dimensions, AsyncStorage, TouchableHighlight, Share } from 'react-native'
+import { View, StyleSheet, Text, Button, Dimensions, AsyncStorage, TouchableHighlight, Share, Picker } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Modal from "react-native-modal";
 let { width, height } = Dimensions.get('window');
@@ -40,7 +40,7 @@ export default class feltUncomfortable extends Component {
       key1: "",
       isDateTimePickerVisible: false,
       category: null,
-      username: null,
+      email: null,
       info: ""
     }
     this.onRegionChange = this.onRegionChange.bind(this);
@@ -104,8 +104,8 @@ export default class feltUncomfortable extends Component {
     AsyncStorage.getItem('@MySuperStore:category').then((token) => {
       this.setState({category : token})
     })
-    AsyncStorage.getItem('@MySuperStore:username').then((token) => {
-      this.setState({username : token})
+    AsyncStorage.getItem('@MySuperStore:email').then((token) => {
+      this.setState({email : token})
     })
     AsyncStorage.getItem('@MySuperStore:info').then((token) => {
       this.setState({info : token})
@@ -164,7 +164,7 @@ export default class feltUncomfortable extends Component {
           Authorization: 'Token '+this.state.key1
          },
         body: JSON.stringify({
-          user: this.state.username,
+          user: this.state.email,
           area: "undefined",
           latitude: lat_save,
           longitude: lon_save,
@@ -224,9 +224,33 @@ export default class feltUncomfortable extends Component {
             
 
             </MapView>
-           <View style={{position: "absolute", bottom: 40, right: 40, backgroundColor: 'black', borderRadius: 3}}>
-           <Text style={{color:'white'}}> Last Step! </Text>
+           <View style={{
+             position: "absolute", 
+             bottom: 40, 
+             right: 40, 
+            //  backgroundColor: 'black', 
+            //  borderRadius: 3
+            }}>
+
+           {/* <Text style={{color:'white'}}> Last Step! </Text> */}
           <Button  onPress={()=>{this._showDateTimePicker()}} title="Pick Date & Time" color={'#99004d'} />
+          
+          </View>
+
+
+          <View style={{
+            position: "absolute", 
+            top: 40,  
+            backgroundColor: 'white', 
+            borderRadius: 3
+           }}>
+          <Picker
+            selectedValue={this.state.language}
+            style={{ height: 50, width: 100 }}
+            onValueChange={(itemValue, itemIndex) => this.setState({language: itemValue})}>
+            <Picker.Item label="Java" value="java" />
+            <Picker.Item label="JavaScript" value="js" />
+          </Picker>
           </View>
 
           <DateTimePicker

@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "/Users/Nick/development/react_native/pestofrontend/android/app/build/intermediates/res/merged/debug/values-si-rLK/values-si-rLK.xml",
+            "outputFile": "/Users/Nick/development/react_native/pestofrontend(backUp)/android/app/build/intermediates/res/merged/debug/values-si-rLK/values-si-rLK.xml",
             "map": [
                 {
                     "source": "/Users/Nick/.gradle/caches/transforms-1/files-1.1/appcompat-v7-25.0.0.aar/a8f4dd9adce9ade097adee237713cc2e/res/values-si-rLK/values-si-rLK.xml",
@@ -16,7 +16,7 @@
             ]
         },
         {
-            "outputFile": "/Users/Nick/development/react_native/pestofrontend/android/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-si-rLK/values-si-rLK.xml",
+            "outputFile": "/Users/Nick/development/react_native/pestofrontend(backUp)/android/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-si-rLK/values-si-rLK.xml",
             "map": [
                 {
                     "source": "/Users/Nick/.gradle/caches/transforms-1/files-1.1/appcompat-v7-25.0.0.aar/a8f4dd9adce9ade097adee237713cc2e/res/values-si-rLK/values-si-rLK.xml",

@@ -18,6 +18,16 @@ export default class LoginPage extends Component {
       key: null
     };
   }
+
+  componentDidMount() {   
+    AsyncStorage.getItem('@MySuperStore:key').then((token) => {
+    this.setState({key : token})
+    })
+    console.log(this.state.key)
+    if (this.state.key!=undefined){
+      this.props.navigation.navigate('HomePage')
+    }
+  }
   
   onLogin = async () => {
     const { username, email, password } = this.state;
@@ -37,9 +47,12 @@ export default class LoginPage extends Component {
     .then((responseJson) => {
       console.log("Response",responseJson)
       this.state.key = responseJson.key;
+      if(responseJson.key==undefined){
+        alert('Invalid username or password')
+      }
     })
     .catch((error) => {
-      console.error(error);
+      console.error("Error", error);
     })
     console.log("key",this.state.key)
     try {
@@ -48,7 +61,7 @@ export default class LoginPage extends Component {
       console.log("Error saving data" + error);
     }   
     try {
-      await AsyncStorage.setItem('@MySuperStore:username', this.state.username);
+      await AsyncStorage.setItem('@MySuperStore:email', this.state.email);
     } catch (error) {
       console.log("Error saving data" + error);
     }
@@ -71,15 +84,6 @@ export default class LoginPage extends Component {
                 </Text>
             </View>
 
-            <TextInput
-                value={this.state.username}
-                onChangeText={(username) => this.setState({ username })}
-                placeholder={'Username'}
-                style={styles.input}
-                placeholderTextColor={'#aaaaaa'}
-                underlineColorAndroid={'#aaaaaa'}
-
-            />
             <TextInput
                 value={this.state.Email}
                 onChangeText={(email) => this.setState({ email })}
